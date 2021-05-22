@@ -93,6 +93,7 @@ export default {
   cursor: text;
   letter-spacing: 1px;
   user-select: none;
+  //font-family: monospace;
   & > section {
     overflow: hidden;
     //overflow-x: auto;
@@ -101,6 +102,11 @@ export default {
   .text-editor-content__row {
     white-space: nowrap;
     padding: 4px 3px;
+  }
+  .text-editor-content__cell {
+  }
+  .text-editor-content__tabs {
+    padding-left: 18px;
   }
 }
 </style>

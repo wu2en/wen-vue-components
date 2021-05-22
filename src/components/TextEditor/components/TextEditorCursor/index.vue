@@ -48,7 +48,8 @@ export default {
      * @param {Location} location 坐标
      */
     setLocate(location) {
-      this.cursor.style.setProperty('transform', `translate(${location.x - 2}px, ${location.y}px)`)
+      const y = location.y > 2 ? location.y + 2 : 2
+      this.cursor.style.setProperty('transform', `translate(${location.x - 2}px, ${y}px)`)
     }
   }
 }

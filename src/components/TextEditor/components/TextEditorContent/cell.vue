@@ -1,5 +1,5 @@
 <template>
-  <span class="text-editor-content__cell" v-on.stop="{mousedown: click, mouseup: click}" v-text="cell.text" />
+  <span :class="{'text-editor-content__tabs': isTabs, 'text-editor-content__space': isSpace}" class="text-editor-content__cell" v-on.stop="{mousedown: click, mouseup: click}" v-text="text" />
 </template>
 
 <script>
@@ -24,6 +24,15 @@ export default {
     },
     y() {
       return this.cell.row.$vm ? this.cell.row.$vm.y : this.cell.row.rowIndex * 26
+    },
+    isSpace() {
+      return this.cell.text === ' '
+    },
+    isTabs() {
+      return this.cell.text === '\t'
+    },
+    text() {
+      return this.isSpace || this.isTabs ? '' : this.cell.text
     }
   },
   created() {

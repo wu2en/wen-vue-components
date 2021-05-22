@@ -4,7 +4,7 @@
 
 <script>
 import { cursorLocation } from '../TextEditorCursor/locate'
-import { hasFuncCode, stopDefault } from './keyboard'
+import * as keyboard from './keyboard'
 
 export default {
   name: 'EditorContentInput',
@@ -31,10 +31,7 @@ export default {
       handler(text) {
         if (text) {
           this.text = ''
-          const { rowIndex, colIndex } = cursorLocation.getCoordinate()
-          if (this.rows[rowIndex]) {
-            this.rows[rowIndex].insertText(text, colIndex)
-          }
+          this.input(text)
         }
       }
     }
@@ -56,10 +53,25 @@ export default {
         this.$refs['input'][isFocus ? 'focus' : 'blur']()
       }
     },
-    keydown(e) {
-      if (hasFuncCode(e)) {
-        stopDefault(e)
+    input(text) {
+      const { rowIndex, colIndex } = cursorLocation.getCoordinate()
+      if (this.rows[rowIndex]) {
+        this.rows[rowIndex].insertText(text, colIndex)
       }
+    },
+    keydown(e) {
+      const keyCode = keyboard.getKeyCode(e)
+      do {
+        if (keyboard.hasFuncCode(keyCode, () => {
+          console.log('funcCode', keyCode)
+        })) {} else if (keyboard.hasTabsCode(keyCode, tabs => {
+          console.log(tabs, 'tabs')
+          this.input(tabs)
+        })) {} else {
+          break
+        }
+        keyboard.stopDefault(e)
+      } while(0)
       // console.log(e)
     },
     /**

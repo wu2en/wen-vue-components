@@ -1,5 +1,5 @@
 // 控制键码
-const CtrlKeyCode = {
+export const CtrlKeyCode = {
   BACKSPACE: 8,
   TAB: 9,
   ENTER: 13,
@@ -39,21 +39,37 @@ const MediaKeyCode = {
  * @param {KeyboardEvent} e 键盘事件对象
  * @returns {number}
  */
-function getKeyCode(e) {
+export function getKeyCode(e) {
   return e.which || e.keyCode || e.charCode
 }
 
 /**
- * 判断是否点击功能键
- * @param {KeyboardEvent} e 键盘事件对象
+ * 判断为功能键
+ * @param {number} keyCode 键盘编号
+ * @param {function} callback
  * @returns {boolean}
  */
-export function hasFuncCode(e) {
-  const keyCode = getKeyCode(e)
-  if (keyCode === CtrlKeyCode.TAB) {
+export function hasFuncCode(keyCode, callback) {
+  if (keyCode === CtrlKeyCode.BACKSPACE) {
+    if (typeof callback === 'function') {
+      callback()
+    }
     return true
   }
-  if (keyCode === CtrlKeyCode.BACKSPACE) {
+  return false
+}
+
+/**
+ * 判断是否为制表符编码
+ * @param keyCode
+ * @param callback
+ * @returns {boolean}
+ */
+export function hasTabsCode(keyCode, callback) {
+  if (keyCode === CtrlKeyCode.TAB) {
+    if (typeof callback === 'function') {
+      callback('\t')
+    }
     return true
   }
   return false
